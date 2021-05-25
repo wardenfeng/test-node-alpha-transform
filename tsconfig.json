@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "target": "es5",
+    "sourceMap": true,
+    "strict": true,
+    "outFile": "./dist/index.js"
+  },
+  "files": [
+    "./src/applyMixins.ts",
+    "./src/Container.ts",
+    "./src/NodeAlpha.ts",
+    "./src/Node.ts",
+    "./src/index.ts",
+  ]
+}
