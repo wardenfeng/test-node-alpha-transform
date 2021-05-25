@@ -92,7 +92,7 @@ var t;
         });
         NodeAlpha.prototype._updateWorldAlpha = function (updateChildren) {
             if (updateChildren === void 0) { updateChildren = true; }
-            this._worldAlpha = this._alpha * (this.parent ? this.parent._alpha : 1);
+            this._worldAlpha = this._alpha * (this.parent ? this.parent._worldAlpha : 1);
             if (updateChildren && this.children) {
                 for (var i = 0; i < this.children.length; i++) {
                     this.children[i]._updateWorldAlpha();
@@ -105,22 +105,74 @@ var t;
 })(t || (t = {}));
 var t;
 (function (t) {
+    var NodeVisible = /** @class */ (function () {
+        function NodeVisible() {
+            this.children = [];
+            this._visible = true;
+            this._worldVisible = true;
+        }
+        Object.defineProperty(NodeVisible.prototype, "visible", {
+            get: function () {
+                return this._visible;
+            },
+            set: function (v) {
+                if (this._visible === v) {
+                    return;
+                }
+                this._visible = v;
+                this._updateVisibleChanged();
+            },
+            enumerable: false,
+            configurable: true
+        });
+        NodeVisible.prototype._updateVisibleChanged = function () {
+            this._updateWorldVisible();
+        };
+        Object.defineProperty(NodeVisible.prototype, "worldVisible", {
+            get: function () {
+                return this._worldVisible;
+            },
+            enumerable: false,
+            configurable: true
+        });
+        NodeVisible.prototype._updateWorldVisible = function (updateChildren) {
+            if (updateChildren === void 0) { updateChildren = true; }
+            this._worldVisible = this._visible && (this.parent ? this.parent._worldVisible : true);
+            if (updateChildren && this.children) {
+                for (var i = 0; i < this.children.length; i++) {
+                    this.children[i]._updateWorldVisible();
+                }
+            }
+        };
+        return NodeVisible;
+    }());
+    t.NodeVisible = NodeVisible;
+})(t || (t = {}));
+var t;
+(function (t) {
     var Node = /** @class */ (function () {
         function Node() {
+            this._children = [];
             this._alpha = 1;
             this._worldAlpha = 1;
-            this._children = [];
+            this._visible = true;
+            this._worldVisible = true;
         }
         return Node;
     }());
     t.Node = Node;
-    t.applyMixins(Node, [t.NodeAlpha, t.Container]);
+    t.applyMixins(Node, [t.NodeAlpha, t.NodeVisible, t.Container]);
 })(t || (t = {}));
 var t;
 (function (t) {
     var node = new t.Node();
-    node.children.push(new t.Node(), new t.Node());
+    node.children = [new t.Node(), new t.Node()];
     node.alpha = 0.5;
-    console.log(node.children[0].worldAlpha, node.children[1].worldAlpha);
+    node.children[0].alpha = 0.5;
+    console.assert(node.children[0].worldAlpha === 0.25);
+    console.assert(node.children[1].worldAlpha === 0.5);
+    node.visible = false;
+    console.assert(node.children[0].worldVisible === false);
+    console.assert(node.children[1].worldVisible === false);
 })(t || (t = {}));
 //# sourceMappingURL=index.js.map

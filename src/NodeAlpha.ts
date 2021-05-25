@@ -24,7 +24,7 @@ namespace t {
         protected _worldAlpha: number = 1;
 
         protected _updateWorldAlpha(updateChildren = true) {
-            this._worldAlpha = this._alpha * (this.parent ? this.parent._alpha : 1);
+            this._worldAlpha = this._alpha * (this.parent ? this.parent._worldAlpha : 1);
             if (updateChildren && this.children) {
                 for (let i = 0; i < this.children.length; i++) {
                     this.children[i]._updateWorldAlpha();

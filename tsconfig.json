@@ -9,6 +9,7 @@
     "./src/applyMixins.ts",
     "./src/Container.ts",
     "./src/NodeAlpha.ts",
+    "./src/NodeVisible.ts",
     "./src/Node.ts",
     "./src/index.ts",
   ]
