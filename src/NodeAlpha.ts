@@ -2,7 +2,6 @@ namespace t {
     export class NodeAlpha {
         parent?: NodeAlpha;
         children: NodeAlpha[] = [];
-
         get alpha() {
             return this._alpha;
         }

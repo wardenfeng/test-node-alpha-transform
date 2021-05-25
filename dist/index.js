@@ -26,7 +26,7 @@ var t;
                 this._parent = v;
                 this._parentChanged();
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Container.prototype._parentChanged = function () {
@@ -49,7 +49,7 @@ var t;
                 }
                 this._childrenChanged();
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Container.prototype._childrenChanged = function () {
@@ -77,7 +77,7 @@ var t;
                 this._alpha = v;
                 this._updateAlphaChanged();
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         NodeAlpha.prototype._updateAlphaChanged = function () {
@@ -87,7 +87,7 @@ var t;
             get: function () {
                 return this._worldAlpha;
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         NodeAlpha.prototype._updateWorldAlpha = function (updateChildren) {
